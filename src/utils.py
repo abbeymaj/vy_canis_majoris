@@ -110,4 +110,25 @@ def create_adjusted_magnitude(df):
     
     except Exception as e:
         raise CustomException(e, sys)
+
+
+# Creating a function to extract the date feature from the Calendar Date feature
+def extract_date_feature(df):
+    '''
+    This function extracts the date from the Calendar Date feature from the 
+    data scraped from the AAVSO website.
+    ====================================================================================
+    ---------------
+    Parameters:
+    ---------------
+    df : pandas dataframe -> This is the pandas dataframe with the Calendar Date 
+    feature.
+    
+    ---------------
+    Returns:
+    ---------------
+    df : pandas dataframe -> This is the pandas dataframe with the extracted Date 
+    feature.
+    ====================================================================================
+    '''
     

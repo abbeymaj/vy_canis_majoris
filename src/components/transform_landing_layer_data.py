@@ -5,6 +5,7 @@ from src.utils import create_dataframe
 from src.utils import clean_magnitude_feature
 from src.utils import clean_error_feature
 from src.utils import create_adjusted_magnitude
+from src.utils import extract_date_feature
 from src.exception import CustomException
 
 
@@ -14,12 +15,48 @@ class TransformLandingLayerData():
     This class transforms the data fetched from the AAVSO website and prepares
     it for loading into the landing layer. 
     '''
+    # Creating the constructor for the TransformLandingLayerData class
     def __init__(self, rows:list, cols:list):
         '''
         This is the constructor for the TransformLandingLayerDat class.
         '''
         self.rows = rows
         self.cols = cols
+    
+    # Creating a method to make the calendar date feature into a Datetime
+    # object.
+    def convert_calendar_date_to_datetime(self, df):
+        '''
+        This method converts the calendar date to a datetime object.
+        =================================================================================
+        ---------------
+        Parameters:
+        ---------------
+        df : pandas dataframe -> This is the pandas dataframe with the date feature.
+        
+        ---------------
+        Returns:
+        ---------------
+        df : pandas dataframe -> This is the pandas dataframe with the date feature
+        converted to a datetime object.
+        =================================================================================
+        '''
+        try:
+            # Extracting the date from the Calendar Date feature
+            df['Date'] = df['Calendar_Date'].apply(lambda x: extract_date_feature(x))
+            
+            # Covnerting the Date feature into a DateTime feature
+            df['Date'] = pd.to_datetime(df['Date'], infer_datetime_format=True)
+            
+            # Sorting the dataframe by the Date feature and dropping duplicates
+            df = df.sort_values(by='Date').drop_duplicates(['Date'], keep='last')
+            
+            return df
+        
+        except Exception as e:
+            raise CustomException(e, sys)
+        
+    
     
     # Creating a method to convert the data into a pandas dataframe
     def transform_landing_data(self):
@@ -47,7 +84,10 @@ class TransformLandingLayerData():
             df = create_adjusted_magnitude(df)
             
             # Renaming the Calendar Date feature to Date
-            df = df.rename(columns={'Calendar Date': 'Date'})
+            df = df.rename(columns={'Calendar Date': 'Calendar_Date'})
+            
+            # Extracting the date feature and converting it to a datetime object
+            df = self.convert_calendar_date_to_datetime(df)
             
             # Taking the Date and Adjusted Magnitude features and creating a new dataframe
             sub_df = df[['Date', 'Magnitude_Adj']]

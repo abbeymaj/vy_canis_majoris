@@ -26,4 +26,5 @@ def test_transform_data():
     assert df.shape[0] > 0
     assert df.shape[1] > 0
     assert df.columns.to_list() == ['Date', 'Magnitude_Adj']
+    assert isinstance(df['Date'][0], pd.Timestamp)
     

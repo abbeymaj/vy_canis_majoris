@@ -113,7 +113,7 @@ def create_adjusted_magnitude(df):
 
 
 # Creating a function to extract the date feature from the Calendar Date feature
-def extract_date_feature(df):
+def extract_date_feature(row):
     '''
     This function extracts the date from the Calendar Date feature from the 
     data scraped from the AAVSO website.
@@ -131,4 +131,12 @@ def extract_date_feature(df):
     feature.
     ====================================================================================
     '''
+    try:
+        year = row.split()[0]
+        month = row.split()[1].split('.')[0]
+        day = row.split()[2].split('.')[0]
+        return year+'-'+month+'-'+day
+    
+    except Exception as e:
+        raise CustomException(e, sys)
     

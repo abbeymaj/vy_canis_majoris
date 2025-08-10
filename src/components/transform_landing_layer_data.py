@@ -87,7 +87,7 @@ class TransformLandingLayerData():
             df = df.rename(columns={'Calendar Date': 'Calendar_Date'})
             
             # Extracting the date feature and converting it to a datetime object
-            df = self.convert_calendar_date_to_datetime(df)
+            df = self.convert_calendar_date_to_datetime(df).astype(str)
             
             # Taking the Date and Adjusted Magnitude features and creating a new dataframe
             sub_df = df[['Date', 'Magnitude_Adj']]

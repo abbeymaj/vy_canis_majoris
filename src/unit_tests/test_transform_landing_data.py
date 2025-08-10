@@ -6,7 +6,7 @@ from src.components.fetch_data import FetchData
 from src.components.transform_landing_layer_data import TransformLandingLayerData
 
 # Creating a dataframe as a module for multiple unit tests
-@pytest.fixture(scope="module")  
+@pytest.fixture(scope="module")
 def test_dataframe():
     """Create dataframe once for all tests in this module."""
     fetch = FetchData()
@@ -42,7 +42,6 @@ def test_dataframe_has_columns(test_dataframe):
 def test_dataframe_columns_match(test_dataframe):
     df, cols = test_dataframe
     assert df.columns.tolist() == cols
-
 
 # Verifying that the dataframe is a pandas dataframe
 def test_dataframe_is_pandas_dataframe(transform_data):

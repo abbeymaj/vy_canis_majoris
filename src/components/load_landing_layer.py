@@ -2,6 +2,7 @@
 import sys
 import pandas as pd
 import sqlite3
+from src.components.config_entity import DataBaseConfig
 from src.exception import CustomException
 
 # Creating a class to load the data into a SQLite database
@@ -15,11 +16,11 @@ class LoadLandingLayer():
         '''
         This is the constructor for the LoadLandingLayer class.
         '''
-        self.db_path = 'db/landing/stg_vycma.db'
+        self.db = DataBaseConfig()
     
     
     # Creating a method to load the data into a SQLite database
-    def load_landing_layer(self, rows:list):
+    def load_landing_layer(self, df:pd.DataFrame):
         '''
         This method loads the data into the landing layer.
         ================================================================================
@@ -36,58 +37,32 @@ class LoadLandingLayer():
         ================================================================================
         '''
         try:
-            # Connecting to the database
-            conn = sqlite3.connect(self.db_path)
+            # Creating the connection
+            conn = sqlite3.connect(self.db.db_path)
             
-            # Creating a cursor
+            # Creating the cursor
             cursor = conn.cursor()
             
-            # Creating the landing layer table if it does not exist 
-            cursor.execute(
-                '''
-                CREATE TABLE IF NOT EXISTS landing_tbl(
-                Star TEXT,
-                JD TEXT,
-                Calend_Dt TEXT,
-                Magnitude TEXT,
-                Error TEXT,
-                Filter TEXT,
-                Observer TEXT
-                '''
-            )
-            
-            # Loading the data into the landing layer
-            for row in rows:
+            # Inserting the data into the database
+            for _, row in df.iterrows():
                 cursor.execute(
                     '''
-                    SELECT * 
-                    FROM landing_tbl 
-                    WHERE Star=? 
-                    AND JD=? 
-                    AND Calend_Dt=? 
-                    AND Magnitude=? 
-                    AND Error=? 
-                    AND Filter=? 
-                    AND Observer=?
-                    ''',
-                    (row)
-                )
-                result = cursor.fetchone()
-                if result is None:
-                    cursor.execute(
-                        '''
-                        INSERT INTO landing_tbl()
-                        VALUES(?,?,?,?,?,?,?)
-                        ''',
-                        (row)
+                    INSERT INTO lnd_cma (Date, Magnitude)
+                    VALUES (
+                        ?,
+                        ?
                     )
+                    ON CONFLICT (Date) DO UPDATE SET
+                    Magnitude = excluded.Magnitude
+                    WHERE true
+                    ''', (row['Date'], row['Magnitude_Adj'])
+                )
             
-            # Committing the changes to the database
+            # Committing the transaction
             conn.commit()
             
-            # Closing the connection to the database
-            conn.close()
-            
+            # Closing the connection
+            conn.close()        
         
         except Exception as e:
             raise CustomException(e, sys)

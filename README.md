@@ -9,7 +9,7 @@ The project exposes the link to the database via an API, which was created using
 
 The project has been created using Python and its associated libraries. 
 
-## About VY Canis Majoris
+### About VY Canis Majoris
 
 VY Canis Majoris is a remarkable red hypergiant star located in the constellation Canis Major, approximately 3,800 light-years from Earth. Known for its extreme size and variability, it is one of the largest known stars in the Milky Way, with a radius estimated to be over 1,000 times that of the Sun. VY Canis Majoris is a semi-regular variable star, exhibiting unpredictable changes in brightness due to complex pulsations and massive ejections of stellar material. Surrounded by a dense nebula formed from its own expelled gas and dust, this stellar titan offers a rare glimpse into the final evolutionary stages of massive stars before they explode as supernovae.
 
@@ -28,7 +28,7 @@ VY Canis Majoris is a remarkable red hypergiant star located in the constellatio
 > 🧭 VY Canis Majoris offers a rare glimpse into the final, turbulent stages of stellar evolution for massive stars.
 
 
-## Project Installation
+### Project Installation
 
 Install the project using pip. It is always recommended to use a virtual environment (for example, using anaconda) to do the installation.
 
@@ -40,7 +40,7 @@ To install the project, use the following:
   pip install -r requirements.txt
 ```
     
-## Tech Stack
+### Tech Stack
 
 **Language:** Python
 
@@ -62,7 +62,7 @@ The link to the high-level design document is as follows:
 
 ![VY Canis Majoris Magnitude Data Load - High-Level Design Document](https://github.com/abbeymaj80/my-ml-datasets/raw/refs/heads/master/Design_Docs/VYCMA_Load_Data_HLD.docx)
 
-## References
+### References
 
 - ![American Association of Variable Star Observers Website](https://www.aavso.org/)
 - ![VY Canis Majoris Wikipedia Page](https://en.wikipedia.org/wiki/VY_Canis_Majoris)

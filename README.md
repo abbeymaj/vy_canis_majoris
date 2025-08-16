@@ -50,7 +50,7 @@ To install the project, use the following:
 
 **API:** GitHub Pages
 
-## High-Level Design Documentation
+### High-Level Design Documentation
 
 The high-level design diagram for the ETL pipeline of the project is depicted below:
 

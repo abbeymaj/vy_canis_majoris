@@ -24,7 +24,9 @@ jobs:
                 pip install -r requirements.txt
             
             - name: Run Data Load Pipeline
-              run: python src/pipelines/load_data_pipeline.py
+              run: |
+                export PYTHONPATH=${PYTHONPATH}:$(pwd)
+                python -m src.pipelines.load_data_pipeline
             
             - name: Commit and Push Changes
               run: |
